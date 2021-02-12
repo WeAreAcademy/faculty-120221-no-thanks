@@ -18,10 +18,11 @@ const removeCardsFromDeck = (deck: Card[], numberToRemove: number) => {
   return deck;
 };
 
-const makeNewDeck = () => {
+const makeNewDeck = (): Card[] => {
   const fullDeck = getFullDeck();
-  const reducedDeck = removeCardsFromDeck(fullDeck, 9);
+  const reducedDeck = [...removeCardsFromDeck(fullDeck, 9)];
   shuffleDeck(reducedDeck);
+  return reducedDeck;
 };
 
 export { shuffleDeck, getFullDeck, removeCardsFromDeck, makeNewDeck };

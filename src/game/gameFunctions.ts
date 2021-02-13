@@ -1,8 +1,19 @@
-import { NoThanksGame, PlayerName, Player, ScoredPlayer } from "./types";
+import { NoThanksGame, PlayerName, Player, ScoredPlayer, Card } from "./types";
 
+import { makeNewDeck } from "./deckFunctions";
 export function initialiseGame(playerNames: PlayerName): NoThanksGame {
-  return;
+
+  const toPlayer = (name: PlayerName): Player => {
+    return { name, cards: [], chips: 0 };
+  }
+
+  return {
+    players: [...playerNames].map(toPlayer),
+    deck: makeNewDeck(),
+    active: { playerIdx: 0, chips: 0 }
+  };
 }
+
 
 export function currentPlayer(game: NoThanksGame): Player {
   const ix = game.active.playerIdx;
@@ -10,8 +21,9 @@ export function currentPlayer(game: NoThanksGame): Player {
   console.assert(p !== undefined, "active player ix is out of bounds: " + ix);
   return p;
 }
+
 export function scoreCards(cardsOrig: Card[]): number {
-  // groupBy takeWhile (card => card === current+1 )
+  // groupBy takeWhile (card => card === current+1 ) cardsOrig
 
   if (cardsOrig.length === 0) {
     return 0;
@@ -21,13 +33,16 @@ export function scoreCards(cardsOrig: Card[]): number {
 
   const groupings = [];
   let currentGroup = [sortedCards[0]];
+
   for (let val of sortedCards.slice(1)) {
+
     const prevVal = currentGroup[currentGroup.length - 1];
+
     if (val === prevVal + 1) {
       currentGroup.push(val);
     } else {
       groupings.push(currentGroup);
-      currentGroup = [];
+      currentGroup = [val];
     }
   }
   if (currentGroup.length > 0) {
@@ -42,13 +57,10 @@ export function scorePlayer({ cards, chips }: Player): number {
 }
 
 export function scoreGame(game: NoThanksGame): ScoredPlayer[] {
-  return [];
+  //TODO: sort by score
+  return game.players.map(p => [p, scorePlayer(p)]);
 }
 
 export function sum(ns: number[]): number {
-  function reducer(acc: number, val: number): number {
-    console.log({ acc, val });
-    return acc + val;
-  }
   return ns.reduce((tot, val) => tot + val, 0);
 }

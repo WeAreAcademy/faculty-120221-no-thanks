@@ -1,4 +1,4 @@
-import { getFullDeck, removeCardsFromDeck } from "./deckFunctions";
+import { getFullDeck, makeNewDeck } from "./deckFunctions";
 
 test("getFullDeck", () => {
   expect(getFullDeck()).toStrictEqual([
@@ -38,8 +38,8 @@ test("getFullDeck", () => {
   ]);
 });
 
-test("removeCardsFromDeck", () => {
-  expect(removeCardsFromDeck([3, 5, 4], 3)).toStrictEqual([]);
-  expect(removeCardsFromDeck([6, 7, 8], 0)).toStrictEqual([6, 7, 8]);
-  expect(removeCardsFromDeck([8, 9, 10, 11], 1).length).toBe(3);
-});
+
+test("makeFullDeck", () => {
+  expect(makeNewDeck().length).toBe(24);
+
+})

@@ -1,28 +1,20 @@
 import { Card } from "./types";
 
 const shuffleDeck = (deck: Card[]) => {
-  return deck.sort(() => Math.random() - 0.5);
+  const d = [...deck];
+  d.sort(() => Math.random() - 0.5);
+  return d;
 };
 
-const getFullDeck = () => {
+const getFullDeck = (): Card[] => {
   const initialArray = [...Array(33).keys()];
   const correctedNumbers = initialArray.map((number) => number + 3);
   return correctedNumbers as Card[];
 };
 
-const removeCardsFromDeck = (deck: Card[], numberToRemove: number) => {
-  for (let i = 0; i < numberToRemove; i++) {
-    const randomIndex = Math.floor(Math.random() * deck.length);
-    deck.splice(randomIndex);
-  }
-  return deck;
-};
-
 const makeNewDeck = (): Card[] => {
-  const fullDeck = getFullDeck();
-  const reducedDeck = [...removeCardsFromDeck(fullDeck, 9)];
-  shuffleDeck(reducedDeck);
-  return reducedDeck;
+  const fullDeck = shuffleDeck([...getFullDeck()]);
+  return fullDeck.slice(9);
 };
 
-export { shuffleDeck, getFullDeck, removeCardsFromDeck, makeNewDeck };
+export { shuffleDeck, getFullDeck, makeNewDeck };

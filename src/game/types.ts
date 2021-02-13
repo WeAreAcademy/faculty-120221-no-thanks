@@ -57,3 +57,8 @@ export interface ActiveGame {
   /** index of the active player */
   playerIdx: number;
 }
+
+export enum Action {
+  TakeCard = "TakeCard",
+  PutChip = "PutChip"
+}

@@ -51,7 +51,7 @@ export interface NoThanksGame {
 }
 
 export interface ActiveGame {
-  card: Card;
+  card?: Card;
   chips: number;
   /** index of the active player */
   playerIdx: number;

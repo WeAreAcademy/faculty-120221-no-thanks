@@ -1,6 +1,7 @@
-import { NoThanksGame, PlayerName, Player, ScoredPlayer, Card } from "./types";
+import { NoThanksGame, PlayerName, Player, ScoredPlayer, Card, Action } from "./types";
 
 import { makeNewDeck } from "./deckFunctions";
+import { initial } from "lodash";
 export function initialiseGame(playerNames: PlayerName): NoThanksGame {
 
   const toPlayer = (name: PlayerName): Player => {
@@ -14,6 +15,41 @@ export function initialiseGame(playerNames: PlayerName): NoThanksGame {
   };
 }
 
+export function validActions(game: NoThanksGame): Action[] {
+  const choices = [];
+  if (game.active.card) {
+    choices.push(Action.TakeCard)
+  }
+  if (game.active.card && game.players[game.active.playerIdx].chips > 0) {
+    choices.push(Action.PutChip);
+  }
+  return choices;
+}
+//TODO: Consider making a new state instead of mutating the given one.
+export function applyAction(game: NoThanksGame, action: Action): NoThanksGame {
+  const initiallyActivePlayer = game.players[game.active.playerIdx];
+
+  if (action === Action.TakeCard) {
+    //TODO: improve types so that it'll never typecheck to TakeCard from an empty deck/
+    if (!game.active.card) {
+      throw new Error("can't take card - no active card!");
+    }
+
+    initiallyActivePlayer.cards.push(game.active.card);
+    initiallyActivePlayer.chips += game.active.chips;
+    game.active.card = game.deck.length > 0 ? game.deck.shift() : undefined;
+    game.active.chips = 0;
+
+  } else if (action === Action.PutChip) {
+    if (initiallyActivePlayer.chips <= 0) {
+      throw new Error("active player has no chips - can't put chip!")
+    }
+    initiallyActivePlayer.chips--;
+    game.active.chips++;
+    game.active.playerIdx = (game.active.playerIdx + 1) % game.players.length;
+  }
+  return game;
+}
 
 export function currentPlayer(game: NoThanksGame): Player {
   const ix = game.active.playerIdx;

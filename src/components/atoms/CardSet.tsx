@@ -2,13 +2,14 @@ import React from "react";
 
 import styled from "styled-components";
 
-const CardFrame = styled.div`
-  height: 150px;
-  width: 100px;
+const CardSet = styled.div`
+  max-width: 800px;
   border-style: solid;
+  border-radius: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: row;
 `;
 
-export default CardFrame;
+export default CardSet;

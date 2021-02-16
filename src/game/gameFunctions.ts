@@ -1,6 +1,7 @@
 import { NoThanksGame, PlayerName, Player, ScoredPlayer, Card, Action } from "./types";
 
 import { makeNewDeck } from "./deckFunctions";
+
 export function initialiseGame(playerNames: PlayerName[]): NoThanksGame {
   const startingChips = numStartingChipsForNPlayers(playerNames.length)
   const toPlayer = (name: PlayerName): Player => {
@@ -12,6 +13,20 @@ export function initialiseGame(playerNames: PlayerName[]): NoThanksGame {
     deck: makeNewDeck(),
     active: { playerIdx: 0, chips: 0 }
   };
+}
+
+export function randomiseGame(game: NoThanksGame): NoThanksGame {
+  const numCardsToDistribute = Math.floor(game.deck.length / 2);
+  // const game.deck.slice(0, numCardsToDistribute);
+  for (let i = 0; i < numCardsToDistribute; i++) {
+    //TODO: use API rather than manipulating deck and player directly
+    const player = game.players[i % game.players.length];
+    const card = game.deck.shift();
+    if (card) {
+      player.cards.push(card);
+    }
+  }
+  return game;
 }
 function numStartingChipsForNPlayers(numPlayers: number): number {
   const lookup: { [num: number]: number } = { 3: 11, 4: 11, 5: 11, 6: 9, 7: 7 };
@@ -65,12 +80,7 @@ export function currentPlayer(game: NoThanksGame): Player {
   return p;
 }
 
-export function scoreCards(cardsOrig: Card[]): number {
-  // groupBy takeWhile (card => card === current+1 ) cardsOrig
-
-  if (cardsOrig.length === 0) {
-    return 0;
-  }
+export function groupCards(cardsOrig: Card[]): Card[][] {
 
   const sortedCards = [...cardsOrig].sort();
 
@@ -91,7 +101,15 @@ export function scoreCards(cardsOrig: Card[]): number {
   if (currentGroup.length > 0) {
     groupings.push(currentGroup);
   }
+  return groupings;
+}
+export function scoreCards(cardsOrig: Card[]): number {
+  // groupBy takeWhile (card => card === current+1 ) cardsOrig
 
+  if (cardsOrig.length === 0) {
+    return 0;
+  }
+  const groupings = groupCards(cardsOrig);
   return sum(groupings.map((g) => g[0]));
 }
 

@@ -2,3 +2,9 @@
   font-family: sans-serif;
   text-align: center;
 }
+.cardGroup {
+  border: 2px solid red;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}

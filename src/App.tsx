@@ -3,11 +3,16 @@ import "./styles.css";
 import GameDeck from "./components/GameDeck";
 import GameCard from "./components/GameCard";
 import Counters from "./components/molecules/Counters";
-import { initialiseGame } from "./game/gameFunctions";
+import {
+  groupCards,
+  initialiseGame,
+  randomiseGame,
+} from "./game/gameFunctions";
 import { Card, PlayerName } from "./game/types";
+import CardSet from "./components/atoms/CardSet";
 
 export default function App() {
-  const game = initialiseGame(["larry", "curly", "mo"]);
+  const game = randomiseGame(initialiseGame(["larry", "curly", "mo"]));
   return (
     <div className="App">
       <h1>No Thanks!</h1>
@@ -28,7 +33,26 @@ interface PlayerProps {
 function Player({ name, chips, cards }: PlayerProps) {
   return (
     <div className="player">
-      Player: {name}. Chips: {chips}. Cards: {cards}
+      Player: {name}. Chips: {chips}.
+      <br />
+      Cards:{" "}
+      <CardSet>
+        {groupCards(cards).map((grp) => (
+          <GameCardGroup cards={grp} />
+        ))}
+      </CardSet>
+    </div>
+  );
+}
+interface GameCardGroupProps {
+  cards: Card[];
+}
+function GameCardGroup({ cards }: GameCardGroupProps) {
+  return (
+    <div className="cardGroup">
+      {cards.map((c: Card) => (
+        <GameCard value={c} />
+      ))}
     </div>
   );
 }

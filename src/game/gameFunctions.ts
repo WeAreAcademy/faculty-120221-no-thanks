@@ -1,11 +1,10 @@
 import { NoThanksGame, PlayerName, Player, ScoredPlayer, Card, Action } from "./types";
 
 import { makeNewDeck } from "./deckFunctions";
-import { initial } from "lodash";
-export function initialiseGame(playerNames: PlayerName): NoThanksGame {
-
+export function initialiseGame(playerNames: PlayerName[]): NoThanksGame {
+  const startingChips = numStartingChipsForNPlayers(playerNames.length)
   const toPlayer = (name: PlayerName): Player => {
-    return { name, cards: [], chips: 0 };
+    return { name, cards: [], chips: startingChips };
   }
 
   return {
@@ -13,6 +12,14 @@ export function initialiseGame(playerNames: PlayerName): NoThanksGame {
     deck: makeNewDeck(),
     active: { playerIdx: 0, chips: 0 }
   };
+}
+function numStartingChipsForNPlayers(numPlayers: number): number {
+  const lookup: { [num: number]: number } = { 3: 11, 4: 11, 5: 11, 6: 9, 7: 7 };
+  const startingChips = lookup[numPlayers];
+  if (startingChips === undefined) {
+    throw new Error("Illegal number of players: " + numPlayers);
+  }
+  return startingChips;
 }
 
 export function validActions(game: NoThanksGame): Action[] {

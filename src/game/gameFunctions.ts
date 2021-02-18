@@ -10,15 +10,8 @@ export function currentPlayer(game: NoThanksGame): Player {
   console.assert(p !== undefined, "active player ix is out of bounds: " + ix);
   return p;
 }
-export function scoreCards(cardsOrig: Card[]): number {
-  // groupBy takeWhile (card => card === current+1 )
 
-  if (cardsOrig.length === 0) {
-    return 0;
-  }
-
-  const sortedCards = [...cardsOrig].sort();
-
+function groupCards(sortedCards: Card[]): Card[][] {
   const groupings = [];
   let currentGroup = [sortedCards[0]];
   for (let val of sortedCards.slice(1)) {
@@ -33,8 +26,25 @@ export function scoreCards(cardsOrig: Card[]): number {
   if (currentGroup.length > 0) {
     groupings.push(currentGroup);
   }
-  
-  return sum(groupings.map((g) => g[0]));
+  return groupings;
+}
+
+function scoreGroups(groupings: Card[][]){
+  return groupings.map((g) => g[0])
+}
+
+export function scoreCards(cardsOrig: Card[]): number {
+  // groupBy takeWhile (card => card === current+1 )
+
+  if (cardsOrig.length === 0) {
+    return 0;
+  }
+
+  const sortedCards = [...cardsOrig].sort();
+  const groupings = groupCards(sortedCards)
+  const groupScores = scoreGroups(groupings)
+
+  return sum(groupScores);
 }
 
 export function scorePlayer({ cards, chips }: Player): number {

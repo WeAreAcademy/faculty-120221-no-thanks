@@ -4,6 +4,7 @@ import { Card, Player } from "./types";
 export type Optional<T, K extends keyof T> = Partial<Pick<T, K>> & Omit<T, K>;
 
 export const calculateCardTotal = (cards: Card[]): number => {
+  if (cards.length < 1) return 0;
   const [firstCard, ...remainingCards] = cards.sort();
   let total = firstCard;
   let previous = firstCard;

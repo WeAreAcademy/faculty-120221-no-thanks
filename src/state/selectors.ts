@@ -10,6 +10,13 @@ export const getRemainingDeckLength = createSelector(
 
 export const getPlayers = (state: NoThanksGameState) => state.players;
 
+export const getPlayersWithScores = createSelector(getPlayers, (players) =>
+  players.map((player) => ({
+    ...player,
+    score: calculatePlayerScore(player),
+  }))
+);
+
 export const getPlayerCount = createSelector(
   getPlayers,
   (players) => players.length
@@ -39,6 +46,11 @@ export const getActivePlayer = createSelector(
   getPlayers,
   getActivePlayerIndex,
   (players, idx) => (typeof idx === "number" ? players[idx] : undefined)
+);
+
+export const getActivePlayerName = createSelector(
+  getActivePlayer,
+  (player) => player?.name
 );
 
 export const getActivePlayerScore = createSelector(getActivePlayer, (player) =>

@@ -1,4 +1,4 @@
-import { useReducer, useState } from "react";
+import { Fragment, useReducer, useState } from "react";
 import { creators, selectors } from "./state";
 import { reducer } from "./state/reducer";
 import { initialState } from "./state/state";
@@ -6,7 +6,10 @@ import { initialState } from "./state/state";
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [typedName, setTypedName] = useState("");
-  const activePlayer = selectors.getActivePlayer(state);
+  const activePlayerName = selectors.getActivePlayerName(state);
+  const playersWithScores = selectors.getPlayersWithScores(state);
+  const activeCard = selectors.getActiveCard(state);
+  const activeChips = selectors.getActiveChips(state);
 
   const handleAddPlayer = () => {
     const existingPlayerNames = selectors.getPlayerNames(state);
@@ -61,24 +64,24 @@ function App() {
         No Thanks!
       </button>
       <hr />
-      {activePlayer && (
-        <>
-          <h2>{activePlayer.name}'s turn</h2>
-          <h3>Game area</h3>
-          <p>
-            <b>{selectors.getActiveCard(state)}</b> in play with{" "}
-            <b>{selectors.getActiveChips(state) ?? 0} chips on it.</b>
-          </p>
-          <ul>
-            <li>Player score: {selectors.getActivePlayerScore(state)}</li>
-            <li>Player chips: {selectors.getActivePlayerChips(state)}</li>
-            <li>
-              Player cards:{" "}
-              {selectors.getActivePlayerCardsSorted(state).join(", ")}
-            </li>
-          </ul>
-        </>
+      {activePlayerName && <h2>{activePlayerName}'s turn</h2>}
+      {activeCard && (
+        <h3>
+          {activeCard} in play, {activeChips} counter
+          {activeChips === 1 ? "" : "s"} on it
+        </h3>
       )}
+      {playersWithScores &&
+        playersWithScores.map((player) => (
+          <Fragment key={player.name}>
+            <h3>{player.name}</h3>
+            <ul>
+              <li>Score: {player.score}</li>
+              <li>Chips: {player.chips}</li>
+              <li>Cards: {player.cards.join(", ")}</li>
+            </ul>
+          </Fragment>
+        ))}
       <pre>{JSON.stringify(state, null, 2)}</pre>
     </div>
   );

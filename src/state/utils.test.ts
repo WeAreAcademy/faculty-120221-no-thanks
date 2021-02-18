@@ -15,6 +15,10 @@ describe("calculateCardTotal", () => {
     expect(calculateCardTotal([3, 4, 5, 7])).toBe(-10);
     expect(calculateCardTotal([3, 4, 5, 7, 8])).toBe(-10);
   });
+
+  it("returns 0 for an empty array", () => {
+    expect(calculateCardTotal([])).toBe(0);
+  });
 });
 
 describe("calculatePlayerScore", () => {

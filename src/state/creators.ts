@@ -1,5 +1,5 @@
 import { actions } from "./reducer";
-import { Player } from "./types";
+import { Card, Player } from "./types";
 
 export const addPlayer = (playerName: string) => {
   const newPlayer: Player = {
@@ -8,4 +8,8 @@ export const addPlayer = (playerName: string) => {
     cards: [],
   };
   return actions.players.create.push(newPlayer);
+};
+
+export const generateCutDeck = () => {
+  const wholeDeck: Card[] = Object.keys(Array(35)).map((n) => parseInt(n + 1));
 };

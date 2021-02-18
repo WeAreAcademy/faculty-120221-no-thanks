@@ -21,9 +21,26 @@ function App() {
     }
   };
 
+  const handleDealChips = () => {
+    if (selectors.getPlayerCount(state) < 3) {
+      window.alert("Too few players - minimum 3 needed");
+    } else if (selectors.getPlayerCount(state) > 7) {
+      window.alert("Too many players - max 7");
+    } else {
+      dispatch(creators.dealChips());
+    }
+  };
+
+  const handleFlipCard = () => {
+    if (selectors.getDoesActiveCardExist(state)) {
+      window.alert("Can't flip a card when there is already an active card");
+    } else {
+      dispatch(creators.flipFromDeck());
+    }
+  };
+
   return (
     <div style={{ fontSize: "1.5rem" }}>
-      <pre>{JSON.stringify(state, null, 2)}</pre>
       <input
         placeholder="player name"
         value={typedName}
@@ -34,6 +51,10 @@ function App() {
       <button onClick={() => dispatch(creators.formInitialDeck())}>
         Form initial deck
       </button>
+      <button onClick={handleDealChips}>Deal chips</button>
+      <button onClick={handleFlipCard}>Flip card</button>
+      <hr />
+      <pre>{JSON.stringify(state, null, 2)}</pre>
     </div>
   );
 }

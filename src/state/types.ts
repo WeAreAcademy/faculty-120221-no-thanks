@@ -14,11 +14,11 @@ export interface Player {
 
 export interface NoThanksActiveArea {
   chips: number;
-  card?: Card;
+  card: Card | undefined;
   /**
    * index of the active player if there is one
    */
-  playerIndex?: number;
+  playerIndex: number | undefined;
 }
 
 export type Card =

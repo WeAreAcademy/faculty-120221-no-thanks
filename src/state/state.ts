@@ -5,5 +5,7 @@ export const initialState: NoThanksGameState = {
   deck: [],
   active: {
     chips: 0,
+    playerIndex: undefined,
+    card: undefined,
   },
 };

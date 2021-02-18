@@ -6,6 +6,7 @@ import { initialState } from "./state/state";
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [typedName, setTypedName] = useState("");
+  const activePlayer = selectors.getActivePlayer(state);
 
   const handleAddPlayer = () => {
     const existingPlayerNames = selectors.getPlayerNames(state);
@@ -33,6 +34,7 @@ function App() {
 
   return (
     <div style={{ fontSize: "1.5rem" }}>
+      <h1>No Thanks!</h1>
       <input
         placeholder="player name"
         value={typedName}
@@ -47,6 +49,7 @@ function App() {
         Start game
       </button>
       <hr />
+      {activePlayer && <h2>{activePlayer.name}'s turn</h2>}
       <pre>{JSON.stringify(state, null, 2)}</pre>
     </div>
   );

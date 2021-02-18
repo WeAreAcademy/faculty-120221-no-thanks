@@ -27,13 +27,13 @@ export function scoreCards(cardsOrig: Card[]): number {
       currentGroup.push(val);
     } else {
       groupings.push(currentGroup);
-      currentGroup = [];
+      currentGroup = [val];
     }
   }
   if (currentGroup.length > 0) {
     groupings.push(currentGroup);
   }
-
+  
   return sum(groupings.map((g) => g[0]));
 }
 

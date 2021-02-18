@@ -56,18 +56,6 @@ export const playNoThanks = (state: NoThanksGameState): Action => {
     actions.active.chips.create.increment(),
     progressActivePlayer(),
   ]);
-
-  return actions.players.create.do((state, treeState) => {
-    const playerChips = selectors.getActivePlayerChips(treeState);
-    if (typeof playerChips === "undefined" || playerChips < 1) {
-      window.alert("You must take it - you have no chips left!");
-      return state;
-    } else {
-      return {
-        ...state,
-      };
-    }
-  });
 };
 
 export const playTakeCard = ({
@@ -79,6 +67,7 @@ export const playTakeCard = ({
     actions.players[playerIndex!].cards.create.push(card!),
     actions.players[playerIndex!].chips.create.increment(chips ?? 0),
     actions.active.card.create.update(undefined),
+    actions.active.chips.create.update(0),
     flipFromDeck(),
   ]);
 };

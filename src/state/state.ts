@@ -1,6 +1,6 @@
 import { NoThanksGameState } from "./types";
 
-const initialState: NoThanksGameState = {
+export const initialState: NoThanksGameState = {
   players: [],
   deck: [],
   active: {

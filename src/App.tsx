@@ -7,6 +7,7 @@ function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [typedName, setTypedName] = useState("");
   const activePlayerName = selectors.getActivePlayerName(state);
+  const activePlayerChips = selectors.getActivePlayerChips(state);
   const playersWithScores = selectors.getPlayersWithScores(state);
   const activeCard = selectors.getActiveCard(state);
   const activeChips = selectors.getActiveChips(state);
@@ -64,7 +65,11 @@ function App() {
         No Thanks!
       </button>
       <hr />
-      {activePlayerName && <h2>{activePlayerName}'s turn</h2>}
+      {activePlayerName && (
+        <h2>
+          {activePlayerName}'s turn ({activePlayerChips} chips)
+        </h2>
+      )}
       {activeCard && (
         <h3>
           {activeCard} in play, {activeChips} counter

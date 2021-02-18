@@ -54,6 +54,12 @@ function App() {
       >
         Take card
       </button>
+      <button
+        disabled={!selectors.getIsGameOngoing(state)}
+        onClick={() => dispatch(creators.playNoThanks(state))}
+      >
+        No Thanks!
+      </button>
       <hr />
       {activePlayer && <h2>{activePlayer.name}'s turn</h2>}
       <pre>{JSON.stringify(state, null, 2)}</pre>

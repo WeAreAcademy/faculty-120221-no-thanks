@@ -1,9 +1,9 @@
 export interface NoThanksGameState {
+  active: NoThanksActiveArea;
   /** ordered by turn order */
   players: Player[];
   /** 0th element is top of deck */
   deck: Card[];
-  active: NoThanksActiveArea;
 }
 
 export interface Player {

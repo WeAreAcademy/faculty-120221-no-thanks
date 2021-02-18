@@ -1,7 +1,7 @@
 import { Action, bundle } from "riduce";
 import { selectors } from ".";
 import { actions } from "./reducer";
-import { Card, NoThanksActiveArea, Player } from "./types";
+import { Card, NoThanksActiveArea, NoThanksGameState, Player } from "./types";
 import { generateCutDeck } from "./utils";
 
 export const addPlayer = (playerName: string): Action => {
@@ -39,6 +39,35 @@ export const flipFromDeck = (): Action => {
 export const formInitialDeck = (): Action => {
   const initialDeck = generateCutDeck();
   return actions.deck.create.update(initialDeck);
+};
+
+export const playNoThanks = (state: NoThanksGameState): Action => {
+  const playerChips = selectors.getActivePlayerChips(state);
+  if (typeof playerChips === "undefined" || playerChips < 1) {
+    window.alert("Can't do that - you have no chips");
+    // TODO add identity action to Riduce?
+    return actions.create.do((state) => state);
+  }
+
+  const activeIndex = selectors.getActivePlayerIndex(state);
+
+  return bundle([
+    actions.players[activeIndex!].chips.create.increment(-1),
+    actions.active.chips.create.increment(),
+    progressActivePlayer(),
+  ]);
+
+  return actions.players.create.do((state, treeState) => {
+    const playerChips = selectors.getActivePlayerChips(treeState);
+    if (typeof playerChips === "undefined" || playerChips < 1) {
+      window.alert("You must take it - you have no chips left!");
+      return state;
+    } else {
+      return {
+        ...state,
+      };
+    }
+  });
 };
 
 export const playTakeCard = ({

@@ -39,6 +39,16 @@ export const getActivePlayer = createSelector(
   (players, idx) => (typeof idx === "number" ? players[idx] : undefined)
 );
 
+export const getActivePlayerChips = createSelector(
+  getActivePlayer,
+  (player) => player?.chips
+);
+
+export const getActivePlayerHasChips = createSelector(
+  getActivePlayerChips,
+  (chips) => !!chips
+);
+
 export const getIsGameOngoing = createSelector(
   getRemainingDeckLength,
   getActiveCard,

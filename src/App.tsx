@@ -48,7 +48,10 @@ function App() {
       >
         Start game
       </button>
-      <button onClick={() => dispatch(creators.takeCard(state.active))}>
+      <button
+        disabled={!selectors.getIsGameOngoing(state)}
+        onClick={() => dispatch(creators.playTakeCard(state.active))}
+      >
         Take card
       </button>
       <hr />

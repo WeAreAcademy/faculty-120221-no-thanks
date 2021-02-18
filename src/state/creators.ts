@@ -41,6 +41,19 @@ export const formInitialDeck = (): Action => {
   return actions.deck.create.update(initialDeck);
 };
 
+export const playTakeCard = ({
+  playerIndex,
+  card,
+  chips,
+}: NoThanksActiveArea): Action => {
+  return bundle([
+    actions.players[playerIndex!].cards.create.push(card!),
+    actions.players[playerIndex!].chips.create.increment(chips ?? 0),
+    actions.active.card.create.update(undefined),
+    flipFromDeck(),
+  ]);
+};
+
 export const progressActivePlayer = (): Action => {
   return actions.active.playerIndex.create.do((currentPlayerIdx, treeState) => {
     // no active player -> start game with 0th player
@@ -58,19 +71,6 @@ export const startGame = (): Action => {
     formInitialDeck(),
     dealChips(),
     progressActivePlayer(),
-    flipFromDeck(),
-  ]);
-};
-
-export const takeCard = ({
-  playerIndex,
-  card,
-  chips,
-}: NoThanksActiveArea): Action => {
-  return bundle([
-    actions.players[playerIndex!].cards.create.push(card!),
-    actions.players[playerIndex!].chips.create.increment(chips ?? 0),
-    actions.active.card.create.update(undefined),
     flipFromDeck(),
   ]);
 };

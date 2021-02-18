@@ -42,7 +42,7 @@ export const getActivePlayer = createSelector(
 export const getIsGameOngoing = createSelector(
   getRemainingDeckLength,
   getActiveCard,
-  (remainingDeck, activeCard) => remainingDeck || activeCard
+  (remainingDeck, activeCard) => !!(remainingDeck || activeCard)
 );
 
 export const getCanGameBeStarted = createSelector(

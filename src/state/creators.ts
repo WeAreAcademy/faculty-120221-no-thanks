@@ -1,7 +1,6 @@
-import { shuffle } from "lodash";
 import { actions } from "./reducer";
-import { Card, Player } from "./types";
-import { generateWholeDeck } from "./utils";
+import { Player } from "./types";
+import { generateCutDeck } from "./utils";
 
 export const addPlayer = (playerName: string) => {
   const newPlayer: Player = {
@@ -10,4 +9,10 @@ export const addPlayer = (playerName: string) => {
     cards: [],
   };
   return actions.players.create.push(newPlayer);
+};
+
+export const formInitialDeck = () => {
+  const initialDeck = generateCutDeck();
+  console.log(initialDeck);
+  return actions.deck.create.update(initialDeck);
 };

@@ -13,9 +13,11 @@ function App() {
       window.alert(
         "Can't add a player where the name already exists - player names should be unique"
       );
-    } else {
+    } else if (typedName.length > 0) {
       dispatch(creators.addPlayer(typedName));
       setTypedName("");
+    } else {
+      window.alert("Player name too short!");
     }
   };
 
@@ -28,6 +30,10 @@ function App() {
         onChange={(e) => setTypedName(e.target.value)}
       />
       <button onClick={handleAddPlayer}>Add player</button>
+      <br />
+      <button onClick={() => dispatch(creators.formInitialDeck())}>
+        Form initial deck
+      </button>
     </div>
   );
 }

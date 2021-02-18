@@ -43,7 +43,7 @@ function App() {
       <button onClick={handleAddPlayer}>Add player</button>
       <br />
       <button
-        disabled={!selectors.getIsLegalPlayerCount(state)}
+        disabled={!selectors.getCanGameBeStarted(state)}
         onClick={handleGameStart}
       >
         Start game

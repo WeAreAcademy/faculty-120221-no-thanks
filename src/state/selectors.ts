@@ -1,6 +1,12 @@
 import { createSelector } from "reselect";
 import { NoThanksGameState } from "./types";
 
+export const getRemainingDeck = (state: NoThanksGameState) => state.deck;
+export const getRemainingDeckLength = createSelector(
+  getRemainingDeck,
+  (deck) => deck.length
+);
+
 export const getPlayers = (state: NoThanksGameState) => state.players;
 
 export const getPlayerCount = createSelector(
@@ -31,4 +37,16 @@ export const getActivePlayer = createSelector(
   getPlayers,
   getActivePlayerIndex,
   (players, idx) => (typeof idx === "number" ? players[idx] : undefined)
+);
+
+export const getIsGameOngoing = createSelector(
+  getRemainingDeckLength,
+  getActiveCard,
+  (remainingDeck, activeCard) => remainingDeck || activeCard
+);
+
+export const getCanGameBeStarted = createSelector(
+  getIsLegalPlayerCount,
+  getIsGameOngoing,
+  (isLegalPlayerCount, isGameOngoing) => isLegalPlayerCount && !isGameOngoing
 );

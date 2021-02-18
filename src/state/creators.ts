@@ -70,5 +70,6 @@ export const takeCard = ({
     actions.players[playerIndex!].cards.create.push(card!),
     actions.players[playerIndex!].chips.create.increment(chips ?? 0),
     actions.active.card.create.update(undefined),
+    progressActivePlayer(),
   ]);
 };

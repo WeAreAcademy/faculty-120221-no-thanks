@@ -1,5 +1,7 @@
+import { shuffle } from "lodash";
 import { actions } from "./reducer";
 import { Card, Player } from "./types";
+import { generateWholeDeck } from "./utils";
 
 export const addPlayer = (playerName: string) => {
   const newPlayer: Player = {
@@ -8,8 +10,4 @@ export const addPlayer = (playerName: string) => {
     cards: [],
   };
   return actions.players.create.push(newPlayer);
-};
-
-export const generateCutDeck = () => {
-  const wholeDeck: Card[] = Object.keys(Array(35)).map((n) => parseInt(n + 1));
 };

@@ -70,6 +70,7 @@ function App() {
             <b>{selectors.getActiveChips(state) ?? 0} chips on it.</b>
           </p>
           <ul>
+            <li>Player score: {selectors.getActivePlayerScore(state)}</li>
             <li>Player chips: {selectors.getActivePlayerChips(state)}</li>
             <li>
               Player cards:{" "}

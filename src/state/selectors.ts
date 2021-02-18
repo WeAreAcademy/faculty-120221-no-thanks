@@ -1,5 +1,6 @@
 import { createSelector } from "reselect";
 import { NoThanksGameState } from "./types";
+import { calculatePlayerScore } from "./utils";
 
 export const getRemainingDeck = (state: NoThanksGameState) => state.deck;
 export const getRemainingDeckLength = createSelector(
@@ -38,6 +39,10 @@ export const getActivePlayer = createSelector(
   getPlayers,
   getActivePlayerIndex,
   (players, idx) => (typeof idx === "number" ? players[idx] : undefined)
+);
+
+export const getActivePlayerScore = createSelector(getActivePlayer, (player) =>
+  player ? calculatePlayerScore(player) : 0
 );
 
 export const getActivePlayerCards = createSelector(

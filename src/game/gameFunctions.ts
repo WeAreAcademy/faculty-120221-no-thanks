@@ -1,18 +1,38 @@
-import { NoThanksGame, PlayerName, Player, ScoredPlayer, Card, Action } from "./types";
+import { NoThanksGame, PlayerName, Player, ScoredPlayer, Card, Action, NumPlayers } from "./types";
 
 import { makeNewDeck } from "./deckFunctions";
 
+
+function isValidNumPlayers(n: number): n is NumPlayers {
+  return [3 | 4 | 5 | 6 | 7].includes(n);
+}
+
 export function initialiseGame(playerNames: PlayerName[]): NoThanksGame {
-  const startingChips = numStartingChipsForNPlayers(playerNames.length)
-  const toPlayer = (name: PlayerName): Player => {
+  const numPlayers = playerNames.length;
+  if (!isValidNumPlayers(numPlayers)) {
+    //TODO: return error message - don't throw
+    throw new Error("Invalid number of players");
+  }
+
+  const startingChips = numStartingChipsForNPlayers(numPlayers)
+  const createPlayer = (name: PlayerName): Player => {
     return { name, cards: [], chips: startingChips };
   }
 
   return {
-    players: [...playerNames].map(toPlayer),
+    players: [...playerNames].map(createPlayer),
     deck: makeNewDeck(),
     active: { playerIdx: 0, chips: 0 }
   };
+}
+
+function numStartingChipsForNPlayers(numPlayers: NumPlayers): number {
+  const lookup: { [num: number]: number } = { 3: 11, 4: 11, 5: 11, 6: 9, 7: 7 };
+  const startingChips = lookup[numPlayers];
+  if (startingChips === undefined) {
+    throw new Error("Illegal number of players: " + numPlayers);
+  }
+  return startingChips;
 }
 
 export function randomiseGame(game: NoThanksGame): NoThanksGame {
@@ -27,14 +47,6 @@ export function randomiseGame(game: NoThanksGame): NoThanksGame {
     }
   }
   return game;
-}
-function numStartingChipsForNPlayers(numPlayers: number): number {
-  const lookup: { [num: number]: number } = { 3: 11, 4: 11, 5: 11, 6: 9, 7: 7 };
-  const startingChips = lookup[numPlayers];
-  if (startingChips === undefined) {
-    throw new Error("Illegal number of players: " + numPlayers);
-  }
-  return startingChips;
 }
 
 export function validActions(game: NoThanksGame): Action[] {

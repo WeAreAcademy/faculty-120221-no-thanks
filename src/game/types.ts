@@ -33,6 +33,8 @@ export type Card =
   | 34
   | 35;
 
+export type NumPlayers = 3 | 4 | 5 | 6 | 7;
+
 export type PlayerName = string;
 
 export interface Player {

@@ -1,5 +1,18 @@
 import { Card } from "./types";
-import { generateCutDeck, generateWholeDeck } from "./utils";
+import {
+  findStartingChipCount,
+  generateCutDeck,
+  generateWholeDeck,
+} from "./utils";
+
+describe("findStartingChipCount", () => {
+  it("throws errors on < 3 and > 7 playerCount", () => {
+    const testCases = [-4, 0, 1, 2, 8, 9, 100];
+    for (let testCase of testCases) {
+      expect(() => findStartingChipCount(testCase)).toThrowError();
+    }
+  });
+});
 
 test("generateWholeDeck generates array of 33 elements with numbers 3 through to 35", () => {
   const [first, ...rest] = generateWholeDeck();

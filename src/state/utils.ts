@@ -1,16 +1,25 @@
 import { shuffle } from "lodash";
-import { Card } from "./types";
+import { Card, Player } from "./types";
 
-export const generateWholeDeck = (): Card[] => {
-  return Array.from(Array(33).keys()).map((n) => n + 3) as Card[];
+export const calculateCardTotal = (cards: Card[]): number => {
+  const [firstCard, ...remainingCards] = cards.sort();
+  let total = firstCard;
+  let previous = firstCard;
+  for (let currentCard of remainingCards) {
+    if (previous + 1 !== currentCard) total += currentCard;
+    previous = currentCard;
+  }
+  return total;
 };
 
-export const generateCutDeck = (): Card[] => {
-  const wholeDeck: Card[] = generateWholeDeck();
-  const shuffledDeck = shuffle(wholeDeck);
-  // 9 cards put back in the box
-  const cutDeck = shuffledDeck.slice(0, -9);
-  return cutDeck;
+export const calculatePlayerScore = (player: Player): number => {
+  const [firstCard, ...remainingCards] = player.cards.sort();
+  let previous = firstCard;
+  for (let card of remainingCards) {
+    if (previous + 1 !== card) {
+    }
+  }
+  return 0;
 };
 
 export const findStartingChipCount = (playerCount: number): number => {
@@ -25,4 +34,16 @@ export const findStartingChipCount = (playerCount: number): number => {
   } else {
     throw new Error("Maximum 7 players");
   }
+};
+
+export const generateWholeDeck = (): Card[] => {
+  return Array.from(Array(33).keys()).map((n) => n + 3) as Card[];
+};
+
+export const generateCutDeck = (): Card[] => {
+  const wholeDeck: Card[] = generateWholeDeck();
+  const shuffledDeck = shuffle(wholeDeck);
+  // 9 cards put back in the box
+  const cutDeck = shuffledDeck.slice(0, -9);
+  return cutDeck;
 };

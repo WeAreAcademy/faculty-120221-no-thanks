@@ -19,9 +19,9 @@ export const dealChips = (): Action => {
 
 export const flipFromDeck = (): Action => {
   return actions.create.do((treeState) => {
-    if (treeState.active.card) {
-      throw new Error("Can't flip card when there is already an active card");
-    }
+    // if (treeState.active.card) {
+    //   throw new Error("Can't flip card when there is already an active card");
+    // }
 
     const [topCard, ...remainingCards] = treeState.deck;
     return {
@@ -53,5 +53,10 @@ export const progressActivePlayer = (): Action => {
 };
 
 export const startGame = (): Action => {
-  return bundle([dealChips(), progressActivePlayer(), flipFromDeck()]);
+  return bundle([
+    formInitialDeck(),
+    dealChips(),
+    progressActivePlayer(),
+    flipFromDeck(),
+  ]);
 };

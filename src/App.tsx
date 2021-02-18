@@ -39,6 +39,16 @@ function App() {
     }
   };
 
+  const handleGameStart = () => {
+    if (selectors.getPlayerCount(state) < 3) {
+      window.alert("Too few players - minimum 3 needed");
+    } else if (selectors.getPlayerCount(state) > 7) {
+      window.alert("Too many players - max 7");
+    } else {
+      dispatch(creators.startGame());
+    }
+  };
+
   return (
     <div style={{ fontSize: "1.5rem" }}>
       <input
@@ -48,6 +58,7 @@ function App() {
       />
       <button onClick={handleAddPlayer}>Add player</button>
       <br />
+      <button onClick={handleGameStart}>Start game</button>
       <button onClick={() => dispatch(creators.formInitialDeck())}>
         Form initial deck
       </button>

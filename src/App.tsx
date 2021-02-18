@@ -61,7 +61,23 @@ function App() {
         No Thanks!
       </button>
       <hr />
-      {activePlayer && <h2>{activePlayer.name}'s turn</h2>}
+      {activePlayer && (
+        <>
+          <h2>{activePlayer.name}'s turn</h2>
+          <h3>Game area</h3>
+          <p>
+            <b>{selectors.getActiveCard(state)}</b> in play with{" "}
+            <b>{selectors.getActiveChips(state) ?? 0} chips on it.</b>
+          </p>
+          <ul>
+            <li>Player chips: {selectors.getActivePlayerChips(state)}</li>
+            <li>
+              Player cards:{" "}
+              {selectors.getActivePlayerCardsSorted(state).join(", ")}
+            </li>
+          </ul>
+        </>
+      )}
       <pre>{JSON.stringify(state, null, 2)}</pre>
     </div>
   );

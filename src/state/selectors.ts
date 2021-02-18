@@ -24,6 +24,7 @@ export const getPlayerNames = createSelector(getPlayers, (players) =>
 );
 
 export const getActiveCard = (state: NoThanksGameState) => state.active.card;
+export const getActiveChips = (state: NoThanksGameState) => state.active.chips;
 
 export const getDoesActiveCardExist = createSelector(
   getActiveCard,
@@ -39,9 +40,19 @@ export const getActivePlayer = createSelector(
   (players, idx) => (typeof idx === "number" ? players[idx] : undefined)
 );
 
+export const getActivePlayerCards = createSelector(
+  getActivePlayer,
+  (player) => player?.cards ?? []
+);
+
+export const getActivePlayerCardsSorted = createSelector(
+  getActivePlayerCards,
+  (cards) => cards.sort()
+);
+
 export const getActivePlayerChips = createSelector(
   getActivePlayer,
-  (player) => player?.chips
+  (player) => player?.chips ?? 0
 );
 
 export const getActivePlayerHasChips = createSelector(

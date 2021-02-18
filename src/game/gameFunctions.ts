@@ -1,8 +1,8 @@
-import { NoThanksGame, PlayerName, Player, ScoredPlayer } from "./types";
+import { NoThanksGame, PlayerName, Player, ScoredPlayer, Card } from "./types";
 
-export function initialiseGame(playerNames: PlayerName): NoThanksGame {
-  return;
-}
+// export function initialiseGame(playerNames: PlayerName): NoThanksGame {
+//   return;
+// }
 
 export function currentPlayer(game: NoThanksGame): Player {
   const ix = game.active.playerIdx;

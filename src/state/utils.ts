@@ -1,6 +1,8 @@
 import { shuffle } from "lodash";
 import { Card, Player } from "./types";
 
+export type Optional<T, K extends keyof T> = Partial<Pick<T, K>> & Omit<T, K>;
+
 export const calculateCardTotal = (cards: Card[]): number => {
   const [firstCard, ...remainingCards] = cards.sort();
   let total = firstCard;
@@ -9,17 +11,13 @@ export const calculateCardTotal = (cards: Card[]): number => {
     if (previous + 1 !== currentCard) total += currentCard;
     previous = currentCard;
   }
-  return total;
+  return -total;
 };
 
-export const calculatePlayerScore = (player: Player): number => {
-  const [firstCard, ...remainingCards] = player.cards.sort();
-  let previous = firstCard;
-  for (let card of remainingCards) {
-    if (previous + 1 !== card) {
-    }
-  }
-  return 0;
+export const calculatePlayerScore = (
+  player: Optional<Player, "name">
+): number => {
+  return player.chips + calculateCardTotal(player.cards);
 };
 
 export const findStartingChipCount = (playerCount: number): number => {

@@ -1,18 +1,32 @@
 import { Card } from "./types";
 import {
   calculateCardTotal,
+  calculatePlayerScore,
   findStartingChipCount,
   generateCutDeck,
   generateWholeDeck,
 } from "./utils";
 
 describe("calculateCardTotal", () => {
-  it("only scores the lowest card in a consecutive sequence", () => {
-    expect(calculateCardTotal([3])).toBe(3);
-    expect(calculateCardTotal([3, 4])).toBe(3);
-    expect(calculateCardTotal([3, 4, 5])).toBe(3);
-    expect(calculateCardTotal([3, 4, 5, 7])).toBe(10);
-    expect(calculateCardTotal([3, 4, 5, 7, 8])).toBe(10);
+  it("only scores the lowest card in a consecutive sequence (and returns negative scores)", () => {
+    expect(calculateCardTotal([3])).toBe(-3);
+    expect(calculateCardTotal([3, 4])).toBe(-3);
+    expect(calculateCardTotal([3, 4, 5])).toBe(-3);
+    expect(calculateCardTotal([3, 4, 5, 7])).toBe(-10);
+    expect(calculateCardTotal([3, 4, 5, 7, 8])).toBe(-10);
+  });
+});
+
+describe("calculatePlayerScore", () => {
+  it("adds counter total to the negative card score", () => {
+    expect(calculatePlayerScore({ cards: [3], chips: 10 })).toBe(7);
+    expect(calculatePlayerScore({ cards: [3], chips: 20 })).toBe(17);
+    expect(calculatePlayerScore({ cards: [3, 4], chips: 20 })).toBe(17);
+    expect(calculatePlayerScore({ cards: [3, 4, 5], chips: 20 })).toBe(17);
+    expect(calculatePlayerScore({ cards: [3, 4, 5, 30], chips: 20 })).toBe(-17);
+    expect(calculatePlayerScore({ cards: [3, 4, 5, 30, 31], chips: 20 })).toBe(
+      -17
+    );
   });
 });
 

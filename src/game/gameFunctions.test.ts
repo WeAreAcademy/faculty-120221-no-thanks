@@ -1,4 +1,4 @@
-import { scoreCards, sum } from "./gameFunctions";
+import { scoreCards, scorePlayer, sum } from "./gameFunctions";
 
 test("sum", () => {
   expect(sum([])).toBe(0);
@@ -13,3 +13,13 @@ test("scoreCards", () => {
   expect(scoreCards([10, 20, 30])).toBe(10 + 20 + 30);
   expect(scoreCards([3, 10, 11, 12, 17, 18, 19])).toBe(3 + 10 + 17);
 });
+
+test("scorePlayer", () => {
+  expect(scorePlayer({ name: "Bob", cards: [4], chips: 5 })).toBe(1);
+  expect(scorePlayer({ name: "Bill", cards: [4, 5, 6], chips: 5 })).toBe(1);
+})
+
+test("sum", () => {
+  expect(sum([1, 2])).toBe(3)
+  expect(sum([0])).toBe(0)
+})

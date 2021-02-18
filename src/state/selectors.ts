@@ -6,6 +6,10 @@ export const getPlayerCount = createSelector(
   getPlayers,
   (players) => players.length
 );
+export const getIsLegalPlayerCount = createSelector(
+  getPlayerCount,
+  (count) => 3 <= count && count <= 7
+);
 export const getPlayerNames = createSelector(getPlayers, (players) =>
   players.map((player) => player.name)
 );

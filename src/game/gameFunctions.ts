@@ -56,9 +56,9 @@ export function scoreGame(game: NoThanksGame): ScoredPlayer[] {
 }
 
 export function sum(ns: number[]): number {
-  function reducer(acc: number, val: number): number {
-    console.log({ acc, val });
-    return acc + val;
-  }
+  // function reducer(acc: number, val: number): number {
+  //   console.log({ acc, val });
+  //   return acc + val;
+  // }
   return ns.reduce((tot, val) => tot + val, 0);
 }

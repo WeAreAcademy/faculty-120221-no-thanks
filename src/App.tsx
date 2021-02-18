@@ -48,6 +48,9 @@ function App() {
       >
         Start game
       </button>
+      <button onClick={() => dispatch(creators.takeCard(state.active))}>
+        Take card
+      </button>
       <hr />
       {activePlayer && <h2>{activePlayer.name}'s turn</h2>}
       <pre>{JSON.stringify(state, null, 2)}</pre>

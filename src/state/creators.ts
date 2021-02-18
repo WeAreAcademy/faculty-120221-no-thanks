@@ -1,7 +1,7 @@
 import { Action, bundle } from "riduce";
 import { selectors } from ".";
 import { actions } from "./reducer";
-import { Player } from "./types";
+import { Card, NoThanksActiveArea, Player } from "./types";
 import { generateCutDeck } from "./utils";
 
 export const addPlayer = (playerName: string): Action => {
@@ -58,5 +58,17 @@ export const startGame = (): Action => {
     dealChips(),
     progressActivePlayer(),
     flipFromDeck(),
+  ]);
+};
+
+export const takeCard = ({
+  playerIndex,
+  card,
+  chips,
+}: NoThanksActiveArea): Action => {
+  return bundle([
+    actions.players[playerIndex!].cards.create.push(card!),
+    actions.players[playerIndex!].chips.create.increment(chips ?? 0),
+    actions.active.card.create.update(undefined),
   ]);
 };

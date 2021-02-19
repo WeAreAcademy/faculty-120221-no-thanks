@@ -54,7 +54,7 @@ export default function App() {
           chips={p.chips}
           cards={p.cards}
           name={p.name}
-          isActive={currentPlayer(game) === p}
+          active={currentPlayer(game) === p}
           key={p.name}
         />
       ))}

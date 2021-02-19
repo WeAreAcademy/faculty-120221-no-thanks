@@ -1,4 +1,5 @@
 import React from "react";
+import classnames from "classnames";
 import GameCard from "./components/GameCard";
 import { groupCards, scoreCards } from "./game/gameFunctions";
 import { Card, PlayerName } from "./game/types";
@@ -7,18 +8,18 @@ interface PlayerProps {
   chips: number;
   cards: Card[];
   name: PlayerName;
-  isActive: boolean;
+  active: boolean;
 }
 
 function pluralise(word: string, count: number): string {
   return count === 1 ? word : word + "s";
 }
 
-export function Player({ name, chips, cards, isActive }: PlayerProps) {
+export function Player({ name, chips, cards, active }: PlayerProps) {
   const chipsPhrase = `${chips} ${pluralise("chip", chips)}`;
   return (
-    <div className={`player` + (isActive ? " active" : "")}>
-      {isActive ? "It's your turn, " : ""}{" "}
+    <div className={classnames("player", { active })}>
+      {active ? "It's your turn, " : ""}{" "}
       <span className="player-name">{name}</span>. You have {chipsPhrase}.
       <GameCardHand cards={cards} />
       <div className="running-score">Card score: {scoreCards(cards)}</div>

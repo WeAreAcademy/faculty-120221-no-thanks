@@ -103,11 +103,14 @@ export function currentPlayer(game: NoThanksGame): Player {
   return p;
 }
 
+export function sortCardsNoMutate(cardsOrig: Card[]): Card[] {
+  return [...cardsOrig].sort((a, b) => a - b);
+}
 export function groupCards(cardsOrig: Card[]): Card[][] {
   if (cardsOrig.length === 0) {
     return [];
   }
-  const sortedCards = [...cardsOrig].sort();
+  const sortedCards = sortCardsNoMutate(cardsOrig)
 
   const groupings = [];
   let currentGroup = [sortedCards[0]];

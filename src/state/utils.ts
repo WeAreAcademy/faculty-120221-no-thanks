@@ -1,5 +1,5 @@
 import { shuffle } from "lodash";
-import { Card, Player } from "./types";
+import { Card, NoThanksGameState, Player } from "./types";
 
 export type Optional<T, K extends keyof T> = Partial<Pick<T, K>> & Omit<T, K>;
 
@@ -46,3 +46,12 @@ export const generateCutDeck = (): Card[] => {
   const cutDeck = shuffledDeck.slice(0, -9);
   return cutDeck;
 };
+
+export const isActivePlayer = (
+  player: Player,
+  state: NoThanksGameState
+): boolean => {
+  return Math.random() < 1 / 3;
+};
+
+export const sortCards = (cards: Card[]): Card[] => cards.sort((a, b) => a - b);

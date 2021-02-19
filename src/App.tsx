@@ -1,10 +1,15 @@
 import { Fragment, useReducer, useState } from "react";
+import CardView from "./components/CardView";
+import Chips from "./components/Chips";
+import HandOfCards from "./components/HandOfCards";
 import { creators, selectors } from "./state";
 import { reducer } from "./state/reducer";
-import { initialState } from "./state/state";
+import { fixedState, initialState } from "./state/state";
+import PlayerView from "./components/PlayerView";
+import { isActivePlayer } from "./state/utils";
 
 function App() {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, fixedState);
   const [typedName, setTypedName] = useState("");
   const activePlayerName = selectors.getActivePlayerName(state);
   const activePlayerChips = selectors.getActivePlayerChips(state);
@@ -39,6 +44,13 @@ function App() {
   return (
     <div style={{ fontSize: "1.5rem" }}>
       <h1>No Thanks!</h1>
+      <button
+        onClick={() => {
+          dispatch(creators.randomiseStartGame());
+        }}
+      >
+        Get players
+      </button>
       <input
         placeholder="player name"
         value={typedName}
@@ -72,20 +84,13 @@ function App() {
       )}
       {activeCard && (
         <h3>
-          {activeCard} in play, {activeChips} counter
+          <CardView numberOnCard={activeCard} /> in play, {activeChips} counter
           {activeChips === 1 ? "" : "s"} on it
         </h3>
       )}
       {playersWithScores &&
         playersWithScores.map((player) => (
-          <Fragment key={player.name}>
-            <h3>{player.name}</h3>
-            <ul>
-              <li>Score: {player.score}</li>
-              <li>Chips: {player.chips}</li>
-              <li>Cards: {player.cards.join(", ")}</li>
-            </ul>
-          </Fragment>
+          <PlayerView player={player} active={isActivePlayer(player, state)} />
         ))}
       <pre>{JSON.stringify(state, null, 2)}</pre>
     </div>

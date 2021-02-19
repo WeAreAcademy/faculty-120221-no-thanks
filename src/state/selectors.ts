@@ -17,6 +17,8 @@ export const getPlayersWithScores = createSelector(getPlayers, (players) =>
   }))
 );
 
+// export const getPlayersWithScoresAndCardsSorted = createSelector()
+
 export const getPlayerCount = createSelector(
   getPlayers,
   (players) => players.length
@@ -64,7 +66,7 @@ export const getActivePlayerCards = createSelector(
 
 export const getActivePlayerCardsSorted = createSelector(
   getActivePlayerCards,
-  (cards) => cards.sort()
+  (cards) => cards.sort((a, b) => a - b)
 );
 
 export const getActivePlayerChips = createSelector(

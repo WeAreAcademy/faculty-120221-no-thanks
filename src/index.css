@@ -11,3 +11,25 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.card-view {
+  border: 10px yellow solid;
+  margin: 10px;
+  width: fit-content;
+  color: blue;
+  background: orange;
+  padding: 5px;
+  font-weight: bold;
+}
+
+.hand-of-cards {
+  display: flex;
+  flex-direction: row;
+}
+
+.player-view {
+}
+
+.player-view.active {
+  border: 10px gray solid;
+}

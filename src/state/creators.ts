@@ -83,6 +83,17 @@ export const progressActivePlayer = (): Action => {
   });
 };
 
+export const randomiseStartGame = (): Action => {
+  const actions = [
+    addPlayer("Richard"),
+    addPlayer("Esme"),
+    addPlayer("Neill"),
+    startGame(),
+  ];
+
+  return bundle(actions);
+};
+
 export const startGame = (): Action => {
   return bundle([
     formInitialDeck(),

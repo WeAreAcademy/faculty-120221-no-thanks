@@ -104,7 +104,9 @@ export function currentPlayer(game: NoThanksGame): Player {
 }
 
 export function groupCards(cardsOrig: Card[]): Card[][] {
-
+  if (cardsOrig.length === 0) {
+    return [];
+  }
   const sortedCards = [...cardsOrig].sort();
 
   const groupings = [];

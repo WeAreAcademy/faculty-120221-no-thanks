@@ -1,4 +1,4 @@
-import { scoreCards, sum } from "./gameFunctions";
+import { groupCards, scoreCards, sum } from "./gameFunctions";
 
 test("sum", () => {
   expect(sum([])).toBe(0);
@@ -13,3 +13,7 @@ test("scoreCards", () => {
   expect(scoreCards([10, 20, 30])).toBe(10 + 20 + 30);
   expect(scoreCards([3, 10, 11, 12, 17, 18, 19])).toBe(3 + 10 + 17);
 });
+
+test("group cards", () => {
+  expect(groupCards([])).toEqual([])
+})

@@ -45,8 +45,7 @@ export const playNoThanks = (state: NoThanksGameState): Action => {
   const playerChips = selectors.getActivePlayerChips(state);
   if (typeof playerChips === "undefined" || playerChips < 1) {
     window.alert("Can't do that - you have no chips");
-    // TODO add identity action to Riduce?
-    return actions.create.do((state) => state);
+    return actions.create.noop();
   }
 
   const activeIndex = selectors.getActivePlayerIndex(state);

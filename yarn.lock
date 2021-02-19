@@ -9513,10 +9513,10 @@ rgba-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/rgba-regex/-/rgba-regex-1.0.0.tgz#43374e2e2ca0968b0ef1523460b7d730ff22eeb3"
   integrity sha1-QzdOLiyglosO8VI0YLfXMP8i7rM=
 
-riduce@^0.0.12:
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/riduce/-/riduce-0.0.12.tgz#1dfa38b24a8d02878394cd7b899a15b99f7b8bfa"
-  integrity sha512-X1ov8uSZ0m9oO0GHwEQx1CaFJt7b7durOLovMBo4PfZfjb2gd8ae9NBGV5EFEQCV/639bSRQ/BwpRUTlqiO/0A==
+riduce@0.0.13:
+  version "0.0.13"
+  resolved "https://registry.yarnpkg.com/riduce/-/riduce-0.0.13.tgz#fdff3aa40a44ac7f829d01d081b4835256556499"
+  integrity sha512-Xp4kZQGa83xwqDKuYg9Z6eFMRQA0MleIl6+gqZzLSocOw3jG0LWbuhlD/ktO6Lx5Ele1nGS6vaK+colECC173Q==
   dependencies:
     change-case "^4.1.1"
     immer "^3.1.2"

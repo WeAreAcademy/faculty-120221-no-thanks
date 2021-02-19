@@ -1,10 +1,63 @@
 .App {
   font-family: sans-serif;
   text-align: center;
+  background-image: url("./no-thanks-chips.png");
+  background-repeat: no-repeat;
 }
-.cardGroup {
-  border: 2px solid red;
+
+.card-hand {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  /* border: 4px dashed orange; */
   margin: 10px;
+}
+.card-run {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+  width: 120px;
+}
+
+.card-container {
+  flex: 1 0 0;
+  overflow-x: hidden;
+  border-radius: 5px;
+  box-shadow: 4px 5px 11px -2px rgba(0, 0, 0, 0.44);
+}
+
+.card-container:last-child {
+  flex: 0 0 auto;
+}
+
+.card,
+.deck {
+  background: whitesmoke;
+  border-radius: 5px;
+  border: 2px solid gray;
+  width: 60px;
+  height: 100px;
+}
+
+.card-value {
+  position: relative;
+  top: 0%;
+  left: -28%;
+}
+
+.deck {
+  padding: 3px;
+  font-size: x-small;
+  color: blue;
+}
+
+.player {
+  border: 10px solid gray;
+  border-radius: 5px;
+  margin: 5px;
+}
+.player.active {
+  border: 10px solid red;
+}
+.player.active .player-name {
+  font-weight: bold;
 }

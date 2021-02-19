@@ -4,7 +4,8 @@ import { makeNewDeck } from "./deckFunctions";
 
 
 function isValidNumPlayers(n: number): n is NumPlayers {
-  return [3 | 4 | 5 | 6 | 7].includes(n);
+  console.log(`checking if ${n} is valid num of players`)
+  return [3, 4, 5, 6, 7].includes(n);
 }
 
 export function initialiseGame(playerNames: PlayerName[]): NoThanksGame {
@@ -30,7 +31,7 @@ function numStartingChipsForNPlayers(numPlayers: NumPlayers): number {
   const lookup: { [num: number]: number } = { 3: 11, 4: 11, 5: 11, 6: 9, 7: 7 };
   const startingChips = lookup[numPlayers];
   if (startingChips === undefined) {
-    throw new Error("Illegal number of players: " + numPlayers);
+    throw new Error("Number of players not found in lookup: " + numPlayers);
   }
   return startingChips;
 }

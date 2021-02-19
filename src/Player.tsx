@@ -1,6 +1,6 @@
 import React from "react";
 import GameCard from "./components/GameCard";
-import { groupCards } from "./game/gameFunctions";
+import { groupCards, scoreCards } from "./game/gameFunctions";
 import { Card, PlayerName } from "./game/types";
 
 interface PlayerProps {
@@ -21,6 +21,7 @@ export function Player({ name, chips, cards, isActive }: PlayerProps) {
       {isActive ? "It's your turn, " : ""}{" "}
       <span className="player-name">{name}</span>. You have {chipsPhrase}.
       <GameCardHand cards={cards} />
+      <div className="running-score">Card score: {scoreCards(cards)}</div>
     </div>
   );
 }

@@ -20,11 +20,14 @@ export function initialiseGame(playerNames: PlayerName[]): NoThanksGame {
     return { name, cards: [], chips: startingChips };
   }
 
-  return {
+  const game: NoThanksGame = {
     players: [...playerNames].map(createPlayer),
     deck: makeNewDeck(),
     active: { playerIdx: 0, chips: 0 }
   };
+  const firstCard = game.deck.pop()
+  game.active.card = firstCard;
+  return game;
 }
 
 function numStartingChipsForNPlayers(numPlayers: NumPlayers): number {
@@ -34,6 +37,9 @@ function numStartingChipsForNPlayers(numPlayers: NumPlayers): number {
     throw new Error("Number of players not found in lookup: " + numPlayers);
   }
   return startingChips;
+}
+export function makeRandomGame(): NoThanksGame {
+  return randomiseGame(initialiseGame(["Larry", "Curly", "Mo"]))
 }
 
 export function randomiseGame(game: NoThanksGame): NoThanksGame {
@@ -46,6 +52,10 @@ export function randomiseGame(game: NoThanksGame): NoThanksGame {
     if (card) {
       player.cards.push(card);
     }
+  }
+
+  for (let p of game.players) {
+    p.chips = Math.floor(Math.random() * 20);
   }
   return game;
 }
@@ -63,7 +73,7 @@ export function validActions(game: NoThanksGame): Action[] {
 //TODO: Consider making a new state instead of mutating the given one.
 export function applyAction(game: NoThanksGame, action: Action): NoThanksGame {
   const initiallyActivePlayer = game.players[game.active.playerIdx];
-
+  debugger
   if (action === Action.TakeCard) {
     //TODO: improve types so that it'll never typecheck to TakeCard from an empty deck/
     if (!game.active.card) {

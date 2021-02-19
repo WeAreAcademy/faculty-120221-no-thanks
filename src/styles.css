@@ -1,3 +1,7 @@
+body {
+  max-width: 1080px;
+  margin: 0 auto;
+}
 .App {
   font-family: sans-serif;
   text-align: center;
@@ -8,7 +12,6 @@
 .card-hand {
   display: flex;
   flex-direction: row;
-  /* border: 4px dashed orange; */
   margin: 10px;
 }
 .card-run {
@@ -43,11 +46,15 @@
   top: 0%;
   left: -28%;
 }
+.card-chips-count {
+  color: red;
+}
 
 .deck {
-  padding: 3px;
   font-size: x-small;
   color: blue;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .player {
@@ -60,4 +67,16 @@
 }
 .player.active .player-name {
   font-weight: bold;
+}
+button {
+  height: 2rem;
+  border-radius: 5px;
+  margin: 10px;
+}
+.deck-and-active {
+  display: flex;
+  flex-direction: row;
+  width: 580px;
+  justify-content: flex-start;
+  margin-bottom: 40px;
 }

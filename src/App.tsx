@@ -1,23 +1,54 @@
 import React, { useState } from "react";
 import "./styles.css";
 import GameDeck from "./components/GameDeck";
-import Counters from "./components/molecules/Counters";
 import {
+  applyAction,
   currentPlayer,
   initialiseGame,
+  makeRandomGame,
   randomiseGame,
+  validActions,
 } from "./game/gameFunctions";
 import { Player } from "./Player";
+import { Action, NoThanksGame } from "./game/types";
+import GameCard from "./components/GameCard";
 
 export default function App() {
-  const initialGame = randomiseGame(initialiseGame(["Larry", "Curly", "Mo"]));
+  const initialGame = makeRandomGame();
   const [game, setGame] = useState(initialGame);
 
+  function handleAddChipClicked() {
+    const nextGame: NoThanksGame = applyAction(game, Action.PutChip);
+    setGame({ ...nextGame });
+  }
+  function handleTakeCardClicked() {
+    const nextGame: NoThanksGame = applyAction(game, Action.TakeCard);
+    setGame({ ...nextGame });
+  }
+  function handleRandomiseGameClick() {
+    setGame({ ...makeRandomGame() });
+  }
+  function handleNewGameClick() {
+    setGame(initialiseGame(["Richard", "Esme", "Neill"]));
+  }
   return (
     <div className="App">
       <h1>No Thanks!</h1>
-      <GameDeck cards={game.deck} />
-      {game.active.playerIdx}
+      <div className="deck-and-active">
+        <GameDeck cards={game.deck} />
+        {game.active.card && (
+          <GameCard value={game.active.card} chipsOn={game.active.chips} />
+        )}
+        {validActions(game).includes(Action.PutChip) && (
+          <button onClick={handleAddChipClicked}>Add Chip</button>
+        )}
+        {validActions(game).includes(Action.TakeCard) && (
+          <button onClick={handleTakeCardClicked}>Take Card</button>
+        )}
+        {<button onClick={handleNewGameClick}>New Game</button>}
+        {<button onClick={handleRandomiseGameClick}>Randomise Game</button>}
+      </div>
+
       {game.players.map((p) => (
         <Player
           chips={p.chips}
@@ -27,7 +58,6 @@ export default function App() {
           key={p.name}
         />
       ))}
-      <Counters n={10} />
     </div>
   );
 }

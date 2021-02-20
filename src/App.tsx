@@ -11,7 +11,7 @@ import {
 } from "./game/gameFunctions";
 import { Player } from "./Player";
 import { Action, NoThanksGame } from "./game/types";
-import GameCard from "./components/GameCard";
+import GameCard, { CardInPlay } from "./components/GameCard";
 
 export default function App() {
   const initialGame = makeRandomGame();
@@ -37,7 +37,7 @@ export default function App() {
       <div className="deck-and-active">
         <GameDeck cards={game.deck} />
         {game.active.card && (
-          <GameCard value={game.active.card} chipsOn={game.active.chips} />
+          <CardInPlay value={game.active.card} chipsOn={game.active.chips} />
         )}
         {validActions(game).includes(Action.PutChip) && (
           <button onClick={handleAddChipClicked}>Add Chip</button>

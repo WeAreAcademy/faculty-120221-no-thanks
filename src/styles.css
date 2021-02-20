@@ -32,6 +32,29 @@ body {
   flex: 0 0 auto;
 }
 
+.card-in-play {
+  background: whitesmoke;
+  font-size: 3rem;
+  border-radius: 5px;
+  border: 12px solid white;
+  min-width: 250px;
+  height: 350px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* background-image: url("./imgs/chips/chips-035.png"); */
+}
+.card-in-play .card-value {
+  position: relative;
+  top: 40%;
+  left: 0%;
+}
+.card-chips-count {
+  color: red;
+  position: relative;
+  top: 50%;
+  font-size: medium;
+}
+
 .card,
 .deck {
   background: whitesmoke;
@@ -45,9 +68,6 @@ body {
   position: relative;
   top: 0%;
   left: -28%;
-}
-.card-chips-count {
-  color: red;
 }
 
 .deck {

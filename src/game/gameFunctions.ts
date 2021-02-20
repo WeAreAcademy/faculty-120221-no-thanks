@@ -73,7 +73,6 @@ export function validActions(game: NoThanksGame): Action[] {
 //TODO: Consider making a new state instead of mutating the given one.
 export function applyAction(game: NoThanksGame, action: Action): NoThanksGame {
   const initiallyActivePlayer = game.players[game.active.playerIdx];
-  debugger
   if (action === Action.TakeCard) {
     //TODO: improve types so that it'll never typecheck to TakeCard from an empty deck/
     if (!game.active.card) {

@@ -2,6 +2,8 @@ import React from "react";
 import classnames from "classnames";
 import { Card } from "../game/types";
 
+import { animated, useSpring, interpolate } from "react-spring";
+
 interface Props {
   value: Card;
 }
@@ -11,12 +13,19 @@ interface CardInPlayProps {
 }
 
 export default function GameCard({ value }: Props) {
+  //TODO: make a fade in of the new-arriving card, ONLY.
+  //(Other cards currently get replaced in the DOM due to grouping, i think)
+  const springProps = useSpring({
+    opacity: 1,
+    from: { opacity: 0 },
+  });
+
   return (
-    <div className="card-container">
+    <animated.div className="card-container" style={springProps}>
       <div className="card">
         <div className="card-value">{value}</div>
       </div>
-    </div>
+    </animated.div>
   );
 }
 

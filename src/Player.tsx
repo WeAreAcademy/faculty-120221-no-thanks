@@ -3,6 +3,7 @@ import classnames from "classnames";
 import GameCard from "./components/GameCard";
 import { groupCards, scoreCards } from "./game/gameFunctions";
 import { Card, PlayerName } from "./game/types";
+import { animated, useSpring, interpolate } from "react-spring";
 
 interface PlayerProps {
   chips: number;
@@ -16,13 +17,26 @@ function pluralise(word: string, count: number): string {
 }
 
 export function Player({ name, chips, cards, active }: PlayerProps) {
-  const chipsPhrase = `${chips} ${pluralise("chip", chips)}`;
+  const chipsPhrase = ` ${pluralise("chip", chips)}`;
+
+  const springProps = useSpring<{ score: number; chips: number }>({
+    score: scoreCards(cards),
+    chips,
+    from: { score: 0, chips: 0 },
+  });
+
   return (
     <div className={classnames("player", { active })}>
       {active ? "It's your turn, " : ""}{" "}
-      <span className="player-name">{name}</span>. You have {chipsPhrase}.
+      <span className="player-name">{name}</span>. You have{" "}
+      <animated.span>
+        {springProps.chips.interpolate((v) => Math.round(v))}
+      </animated.span>
+      {chipsPhrase}. Your score is{" "}
+      <animated.span className="running-score">
+        {springProps.score.interpolate((v) => Math.round(v))}
+      </animated.span>
       <GameCardHand cards={cards} />
-      <div className="running-score">Card score: {scoreCards(cards)}</div>
     </div>
   );
 }

@@ -10,18 +10,30 @@ interface PlayerProps {
   cards: Card[];
   name: PlayerName;
   active: boolean;
+  isGameOver: boolean;
 }
 
 function pluralise(word: string, count: number): string {
   return count === 1 ? word : word + "s";
 }
 
-export function Player({ name, chips, cards, active }: PlayerProps) {
+export function Player({
+  name,
+  chips,
+  cards,
+  active,
+  isGameOver,
+}: PlayerProps) {
   const chipsPhrase = ` ${pluralise("chip", chips)}`;
 
-  const springProps = useSpring<{ score: number; chips: number }>({
+  const springProps = useSpring<{
+    score: number;
+    chips: number;
+    finalScore: number;
+  }>({
     score: scoreCards(cards),
     chips,
+    finalScore: scoreCards(cards) - chips,
     from: { score: 0, chips: 0 },
   });
 
@@ -36,6 +48,17 @@ export function Player({ name, chips, cards, active }: PlayerProps) {
       <animated.span className="running-score">
         {springProps.score.interpolate((v) => Math.round(v))}
       </animated.span>
+      .
+      {isGameOver && (
+        <span>
+          {" "}
+          Your final score is{" "}
+          <animated.span className="final-score">
+            {springProps.finalScore.interpolate((v) => Math.round(v))}
+          </animated.span>
+          .
+        </span>
+      )}
       <GameCardHand cards={cards} />
     </div>
   );

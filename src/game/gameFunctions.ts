@@ -95,6 +95,9 @@ export function applyAction(game: NoThanksGame, action: Action): NoThanksGame {
   return game;
 }
 
+export function isGameOver(game: NoThanksGame) {
+  return game.deck.length === 0 && (game.active.card === undefined);
+}
 export function currentPlayer(game: NoThanksGame): Player {
   const ix = game.active.playerIdx;
   const p = game.players[ix];

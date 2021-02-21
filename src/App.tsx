@@ -5,6 +5,7 @@ import {
   applyAction,
   currentPlayer,
   initialiseGame,
+  isGameOver,
   makeRandomGame,
   randomiseGame,
   validActions,
@@ -56,6 +57,7 @@ export default function App() {
           name={p.name}
           active={currentPlayer(game) === p}
           key={p.name}
+          isGameOver={isGameOver(game)}
         />
       ))}
     </div>

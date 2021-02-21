@@ -40,15 +40,15 @@ export function Player({
   return (
     <div className={classnames("player", { active })}>
       {active ? "It's your turn, " : ""}{" "}
-      <span className="player-name">{name}</span>. You have{" "}
-      <animated.span>
-        {springProps.chips.interpolate((v) => Math.round(v))}
-      </animated.span>
-      {chipsPhrase}. Your score is{" "}
+      <span className="player-name">{name}</span>. Your cards total to{" "}
       <animated.span className="running-score">
         {springProps.score.interpolate((v) => Math.round(v))}
       </animated.span>
-      .
+      . You have{" "}
+      <animated.span>
+        {springProps.chips.interpolate((v) => Math.round(v))}
+      </animated.span>
+      {chipsPhrase}.
       {isGameOver && (
         <span>
           {" "}

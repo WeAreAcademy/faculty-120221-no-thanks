@@ -98,7 +98,11 @@ export function applyAction(game: NoThanksGame, action: Action): NoThanksGame {
 export function isGameOver(game: NoThanksGame) {
   return game.deck.length === 0 && (game.active.card === undefined);
 }
-export function currentPlayer(game: NoThanksGame): Player {
+/** Returns the current player  */
+export function currentPlayer(game: NoThanksGame): Player | null {
+  if (isGameOver(game)) {
+    return null;
+  }
   const ix = game.active.playerIdx;
   const p = game.players[ix];
   console.assert(p !== undefined, "active player ix is out of bounds: " + ix);

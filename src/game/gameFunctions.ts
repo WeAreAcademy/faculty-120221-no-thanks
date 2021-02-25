@@ -1,6 +1,8 @@
 import { NoThanksGame, PlayerName, Player, ScoredPlayer, Card } from "./types";
 
-// export function initialiseGame(playerNames: PlayerName): NoThanksGame {
+// export function initialiseGame(playerNames: PlayerName[]): NoThanksGame {
+
+//   const players:Player[] = playerNames.map(name => {return {name, chips: 0, cards:[]}})
 //   return;
 // }
 
@@ -29,7 +31,7 @@ function groupCards(sortedCards: Card[]): Card[][] {
   return groupings;
 }
 
-function scoreGroups(groupings: Card[][]){
+function scoreGroups(groupings: Card[][]) {
   return groupings.map((g) => g[0])
 }
 
@@ -52,7 +54,7 @@ export function scorePlayer({ cards, chips }: Player): number {
 }
 
 export function scoreGame(game: NoThanksGame): ScoredPlayer[] {
-  return [];
+  return game.players.map(player => [player, scorePlayer(player)]);
 }
 
 export function sum(ns: number[]): number {

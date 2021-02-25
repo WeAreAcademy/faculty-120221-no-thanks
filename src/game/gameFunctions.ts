@@ -1,10 +1,65 @@
-import { NoThanksGame, PlayerName, Player, ScoredPlayer, Card } from "./types";
+import { makeNewDeck } from "./deckFunctions";
+import { NoThanksGame, PlayerName, Player, ScoredPlayer, Card, ActiveGame } from "./types";
 
-// export function initialiseGame(playerNames: PlayerName[]): NoThanksGame {
+export function getExamplePlayerNames(): PlayerName[] {
+  return ["Esme", "Neill", "Richard"]
+}
+export function initialiseGame(playerNames: PlayerName[]): NoThanksGame {
+  let players: Player[] = playerNames.map(name => { return { name, chips: 0, cards: [] } })
+  players = dealChipsToPlayers(players)
+  const deck: Card[] = makeNewDeck();
+  const playerIdx: number = getIndexOfNextPlayer(players.length, undefined)
+  const active: ActiveGame = { card: undefined, chips: 0, playerIdx }
+  let game = { players, deck, active }
+  game = flipCardFromDeck(game)
+  return game;
+}
 
-//   const players:Player[] = playerNames.map(name => {return {name, chips: 0, cards:[]}})
-//   return;
-// }
+export function flipCardFromDeck(game: NoThanksGame): NoThanksGame {
+  if (game.active.card) {
+    console.warn("Card already active")
+    return game
+  }
+  else {
+    const [topCard, ...cardsRemaining] = game.deck
+    return { ...game, deck: cardsRemaining, active: { ...game.active, card: topCard } }
+  }
+}
+
+export function dealChipsToPlayers(players: Player[]): Player[] {
+  const startingChipCount = getStartingChipCount(players.length)
+  return players.map(player => ({ ...player, chips: startingChipCount }))
+}
+
+export const getStartingChipCount = (numOfPlayers: number): number => {
+  if (numOfPlayers < 3) {
+    throw new Error("3 players minimum -> need more players");
+  } else if (numOfPlayers <= 5) {
+    return 11;
+  } else if (numOfPlayers === 6) {
+    return 9;
+  } else if (numOfPlayers === 7) {
+    return 7;
+  } else {
+    throw new Error("7 players max -> reduce the number of players");
+  }
+};
+
+export function progressActivePlayer(game: NoThanksGame): NoThanksGame {
+  const { players, deck, active } = game
+  const numOfPlayers = players.length
+  const lastActivePlayer = active.playerIdx
+  const nextPlayer = getIndexOfNextPlayer(numOfPlayers, lastActivePlayer)
+  const nextActive = { ...active }
+  nextActive.playerIdx = nextPlayer
+  return { players, deck, active: nextActive }
+}
+
+export function getIndexOfNextPlayer(numOfPlayers: number, lastActivePlayer: number | undefined): number {
+  if (lastActivePlayer === undefined) return 0;
+  else if (lastActivePlayer < numOfPlayers) return lastActivePlayer + 1
+  else return 0;
+}
 
 export function currentPlayer(game: NoThanksGame): Player {
   const ix = game.active.playerIdx;

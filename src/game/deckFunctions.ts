@@ -22,6 +22,8 @@ const makeNewDeck = () => {
   const fullDeck = getFullDeck();
   const reducedDeck = removeCardsFromDeck(fullDeck, 9);
   shuffleDeck(reducedDeck);
+  return reducedDeck;
 };
+
 
 export { shuffleDeck, getFullDeck, removeCardsFromDeck, makeNewDeck };

@@ -1,6 +1,20 @@
 import { makeNewDeck } from "./deckFunctions";
 import { NoThanksGame, PlayerName, Player, ScoredPlayer, Card, ActiveGame } from "./types";
 
+export function takeCard(game: NoThanksGame): NoThanksGame{
+  const {players, active} = game
+  const newPlayers = [...players]
+  const {playerIdx} = active
+  if (active.card === undefined) {throw new TypeError("active card is undefined")}
+  const newCards = [...newPlayers[playerIdx].cards]
+  newCards.push(active.card)
+  newPlayers[active.playerIdx] = {...newPlayers[active.playerIdx], cards: newCards}
+  const gameTwo = {...game, players: newPlayers}
+  const gameThree = flipCardFromDeck(gameTwo)
+  const gameFour = progressActivePlayer(gameThree)
+  return gameFour
+}
+
 export function getExamplePlayerNames(): PlayerName[] {
   return ["Esme", "Neill", "Richard"]
 }

@@ -15,15 +15,27 @@ export function takeCard(game: NoThanksGame): NoThanksGame{
   // active chips goes to zero
   const newActive = {...active, chips: 0}
   const gameTwo = {...game, players: newPlayers, active: newActive}
+  // new card is flipped from deck
   const gameThree = flipCardFromDeck(gameTwo)
+  // active player moves on
   const gameFour = progressActivePlayer(gameThree)
   return gameFour
 }
 
-// export function playChip(game: NoThanksGame): NoThanksGame{
-//   // player whose turn it is looses a chip
-//   // active chips inceases by one
-// }
+export function playChip(game: NoThanksGame): NoThanksGame{
+  // player whose turn it is looses a chip
+  const {players, active} = game
+  const newPlayers = [...players]
+  const newChipsForPlayer = newPlayers[active.playerIdx].chips - 1
+  newPlayers[active.playerIdx] = {...newPlayers[active.playerIdx], chips: newChipsForPlayer}
+  // active chips inceases by one
+  const newChips = active.chips + 1
+  const newActive = {...active, chips: newChips}
+  const newGame = {...game, active: newActive, players: newPlayers}
+  // active player moves on
+  const gameTwo = progressActivePlayer(newGame)
+  return gameTwo
+}
 
 export function getExamplePlayerNames(): PlayerName[] {
   return ["Esme", "Neill", "Richard"]

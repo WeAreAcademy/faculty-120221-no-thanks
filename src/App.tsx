@@ -12,7 +12,7 @@ export default function App() {
   return (
     <div className="App">
       <h1>No thanks!</h1>
-      <h2>Start editing to see some magic happen!</h2>
+      <h2>A game with chips and cards</h2>
       <button onClick={()=> setGame(playChip(game))} disabled={game.players[game.active.playerIdx].chips <= 0}>No thanks!</button>
       <button onClick={()=>setGame(takeCard(game))}>Take card</button>
       {isGameOver(game) && <div>Game over!
@@ -25,7 +25,7 @@ export default function App() {
       </div>
       <div className="players">
         {game.players.map((player, index)=> <>
-        <PlayerCard player={player} isActive={game.active.playerIdx===index}/>
+        <PlayerCard player={player} isActive={game.active.playerIdx===index} key={index}/>
         </>)}
       </div>
     </div>
@@ -42,7 +42,7 @@ function PlayerCard({player, isActive}: PlayerCardProps){
     <div className={isActive ? "player-card active-player": "player-card"}>
       <div className="name">{name}</div>
       <Counters n={chips}/>
-      {cards.length ? cards.map((card: Card)=><GameCard value={card}/>): "No cards yet"}
+      {cards.length ? cards.map((card: Card)=><GameCard key={card} value={card}/>): "No cards yet"}
 
     </div>
   )

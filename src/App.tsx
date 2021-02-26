@@ -4,7 +4,6 @@ import GameDeck from "./components/GameDeck";
 import GameCard from "./components/GameCard";
 import Counters from "./components/molecules/Counters";
 import { getExamplePlayerNames, initialiseGame, isGameOver, playChip, scoreGame, takeCard } from "./game/gameFunctions";
-import { Card, Player } from "./game/types";
 import PlayerCard from "./components/molecules/PlayerCard";
 
 export default function App() {

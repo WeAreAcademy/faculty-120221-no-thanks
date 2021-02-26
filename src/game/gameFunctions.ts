@@ -26,6 +26,7 @@ export function playChip(game: NoThanksGame): NoThanksGame {
   // player whose turn it is looses a chip
   const { players, active } = game
   const newPlayers = [...players]
+  if (newPlayers[active.playerIdx].chips === 0) {console.warn("player has no chips left")}
   const newChipsForPlayer = newPlayers[active.playerIdx].chips - 1
   newPlayers[active.playerIdx] = { ...newPlayers[active.playerIdx], chips: newChipsForPlayer }
   // active chips inceases by one
@@ -35,6 +36,11 @@ export function playChip(game: NoThanksGame): NoThanksGame {
   // active player moves on
   const gameTwo = progressActivePlayer(newGame)
   return gameTwo
+}
+
+export function isGameOver(game: NoThanksGame): boolean{
+  if (game.deck.length === 0) return true
+  else return false
 }
 
 export function getExamplePlayerNames(): PlayerName[] {

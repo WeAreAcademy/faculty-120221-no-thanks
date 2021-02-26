@@ -6,14 +6,24 @@ export function takeCard(game: NoThanksGame): NoThanksGame{
   const newPlayers = [...players]
   const {playerIdx} = active
   if (active.card === undefined) {throw new TypeError("active card is undefined")}
+  // player gains card
   const newCards = [...newPlayers[playerIdx].cards]
   newCards.push(active.card)
-  newPlayers[active.playerIdx] = {...newPlayers[active.playerIdx], cards: newCards}
-  const gameTwo = {...game, players: newPlayers}
+  // player gains chips
+  const newChips = newPlayers[playerIdx].chips + active.chips
+  newPlayers[active.playerIdx] = {...newPlayers[active.playerIdx], cards: newCards, chips: newChips}
+  // active chips goes to zero
+  const newActive = {...active, chips: 0}
+  const gameTwo = {...game, players: newPlayers, active: newActive}
   const gameThree = flipCardFromDeck(gameTwo)
   const gameFour = progressActivePlayer(gameThree)
   return gameFour
 }
+
+// export function playChip(game: NoThanksGame): NoThanksGame{
+//   // player whose turn it is looses a chip
+//   // active chips inceases by one
+// }
 
 export function getExamplePlayerNames(): PlayerName[] {
   return ["Esme", "Neill", "Richard"]

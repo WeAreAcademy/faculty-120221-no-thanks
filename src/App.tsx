@@ -19,8 +19,8 @@ export default function App() {
       Chips on card: <Counters n={game.active.chips} />
       </div>
       <div className="players">
-        {game.players.map(player=> <>
-        <PlayerCard player={player}/>
+        {game.players.map((player, index)=> <>
+        <PlayerCard player={player} isActive={game.active.playerIdx===index}/>
         </>)}
       </div>
     </div>
@@ -28,12 +28,13 @@ export default function App() {
 }
 
 interface PlayerCardProps {
-  player: Player
+  player: Player,
+  isActive: boolean
 }
-function PlayerCard({player}: PlayerCardProps){
+function PlayerCard({player, isActive}: PlayerCardProps){
   const {chips, name,cards} = player
   return (
-    <div className="player-card">
+    <div className={isActive ? "player-card active-player": "player-card"}>
       <div className="name">{name}</div>
       <Counters n={chips}/>
       {cards.length ? cards.map((card: Card)=><GameCard value={card}/>): "No cards yet"}

@@ -1,20 +1,20 @@
 import { makeNewDeck } from "./deckFunctions";
 import { NoThanksGame, PlayerName, Player, ScoredPlayer, Card, ActiveGame } from "./types";
 
-export function takeCard(game: NoThanksGame): NoThanksGame{
-  const {players, active} = game
+export function takeCard(game: NoThanksGame): NoThanksGame {
+  const { players, active } = game
   const newPlayers = [...players]
-  const {playerIdx} = active
-  if (active.card === undefined) {throw new TypeError("active card is undefined")}
+  const { playerIdx } = active
+  if (active.card === undefined) { throw new TypeError("active card is undefined") }
   // player gains card
   const newCards = [...newPlayers[playerIdx].cards]
   newCards.push(active.card)
   // player gains chips
   const newChips = newPlayers[playerIdx].chips + active.chips
-  newPlayers[active.playerIdx] = {...newPlayers[active.playerIdx], cards: newCards, chips: newChips}
+  newPlayers[active.playerIdx] = { ...newPlayers[active.playerIdx], cards: newCards, chips: newChips }
   // active chips goes to zero
-  const newActive = {...active, chips: 0}
-  const gameTwo = {...game, players: newPlayers, active: newActive}
+  const newActive = { ...active, chips: 0 }
+  const gameTwo = { ...game, players: newPlayers, active: newActive }
   // new card is flipped from deck
   const gameThree = flipCardFromDeck(gameTwo)
   // active player moves on
@@ -22,16 +22,16 @@ export function takeCard(game: NoThanksGame): NoThanksGame{
   return gameFour
 }
 
-export function playChip(game: NoThanksGame): NoThanksGame{
+export function playChip(game: NoThanksGame): NoThanksGame {
   // player whose turn it is looses a chip
-  const {players, active} = game
+  const { players, active } = game
   const newPlayers = [...players]
   const newChipsForPlayer = newPlayers[active.playerIdx].chips - 1
-  newPlayers[active.playerIdx] = {...newPlayers[active.playerIdx], chips: newChipsForPlayer}
+  newPlayers[active.playerIdx] = { ...newPlayers[active.playerIdx], chips: newChipsForPlayer }
   // active chips inceases by one
   const newChips = active.chips + 1
-  const newActive = {...active, chips: newChips}
-  const newGame = {...game, active: newActive, players: newPlayers}
+  const newActive = { ...active, chips: newChips }
+  const newGame = { ...game, active: newActive, players: newPlayers }
   // active player moves on
   const gameTwo = progressActivePlayer(newGame)
   return gameTwo
@@ -93,7 +93,7 @@ export function progressActivePlayer(game: NoThanksGame): NoThanksGame {
 
 export function getIndexOfNextPlayer(numOfPlayers: number, lastActivePlayer: number | undefined): number {
   if (lastActivePlayer === undefined) return 0;
-  else if (lastActivePlayer < numOfPlayers) return lastActivePlayer + 1
+  else if (lastActivePlayer < numOfPlayers - 1) return lastActivePlayer + 1
   else return 0;
 }
 

@@ -3,7 +3,7 @@ import "./styles.css";
 import GameDeck from "./components/GameDeck";
 import GameCard from "./components/GameCard";
 import Counters from "./components/molecules/Counters";
-import { getExamplePlayerNames, initialiseGame } from "./game/gameFunctions";
+import { getExamplePlayerNames, initialiseGame, playChip } from "./game/gameFunctions";
 import { Card, Player } from "./game/types";
 
 export default function App() {
@@ -13,6 +13,7 @@ export default function App() {
     <div className="App">
       <h1>No thanks!</h1>
       <h2>Start editing to see some magic happen!</h2>
+      <button onClick={()=> setGame(playChip(game))}>No thanks!</button>
       <div className="general-info">
       <GameDeck cards={game.deck} />
       {game.active.card !== undefined && (<>Active card: <GameCard value={game.active.card} /></>)}

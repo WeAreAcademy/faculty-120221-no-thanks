@@ -11,17 +11,20 @@ const getFullDeck = () => {
 };
 
 const removeCardsFromDeck = (deck: Card[], numberToRemove: number) => {
-  for (let i = 0; i < numberToRemove; i++) {
-    const randomIndex = Math.floor(Math.random() * deck.length);
-    deck.splice(randomIndex);
-  }
-  return deck;
+  const newDeck = [...deck]
+  newDeck.splice(deck.length-numberToRemove, numberToRemove)
+  // for (let i = 0; i < numberToRemove; i++) {
+  //   const randomIndex = Math.floor(Math.random() * deck.length);
+  //   deck.splice(randomIndex);
+  // }
+  return newDeck;
 };
 
 const makeNewDeck = () => {
   const fullDeck = getFullDeck();
+  shuffleDeck(fullDeck)
   const reducedDeck = removeCardsFromDeck(fullDeck, 9);
-  shuffleDeck(reducedDeck);
+  // shuffleDeck(reducedDeck);
   return reducedDeck;
 };
 

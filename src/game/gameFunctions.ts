@@ -13,7 +13,7 @@ export function takeCard(game: NoThanksGame): NoThanksGame {
   const newChips = newPlayers[playerIdx].chips + active.chips
   newPlayers[active.playerIdx] = { ...newPlayers[active.playerIdx], cards: newCards, chips: newChips }
   // active chips goes to zero
-  const newActive = { ...active, chips: 0 }
+  const newActive = { ...active, chips: 0 , card: undefined}
   const gameTwo = { ...game, players: newPlayers, active: newActive }
   // new card is flipped from deck
   const gameThree = flipCardFromDeck(gameTwo)
